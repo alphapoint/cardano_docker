@@ -26,15 +26,22 @@ ubuntu              16.04               2a4cca5ac898        8 days ago          
 ````
 
 ### How to run Docker Cardano node 
+Before running Docker container hosting Cardano node it's important to define a volume on the host machine where to bind data : this means blockchain database and other data will be persisted on host environment and not inside the container itself. In case you need to stop/update or run again you container you won't loose you data.
+You need to create a folder somewhere on your environment and give access right to 'root' user.
+```sh
+$  sudo mkdir /data/cardano_docker_db
+````
+
 To start docker container and run Cardano full node run the following command. Successful run should return you the id of the container.
 ```sh
-$  docker run -d --name=cardano -p 127.0.0.1:8090:8090 d899e7637a94
+$  docker run -d --name=cardano -v /data/cardano_docker_db:/home/cardano/cardano-sl/state-wallet-mainnet:Z -p 127.0.0.1:8090:8090 d899e7637a94
 04ca92a3d8d2b7d181de181ed480c45034a12f45e4851522ac29d5a26ecf39a5
 ````
 Command arguments :
 - *-d* : run container in background
 - *--name* : define the name of the Docker container
-- *-p* : port binding, bind the 8090 of the host to the port 8090 inside the container. Be careful that desired port are available on the host environment.
+- *-p* : port binding, bind the 8090 of the host to the port 8090 inside the container. Be careful that desired port are available on the host environment
+- *-v* : bind volume, this option allows to bind volume/folder from inside the container to a volume on the host enivornment. This way you can keep all data (blockchain db , wallet db) out of the container, you can delete and restart container without loosing your data.
 - *d899e7637a94* : docker image id in this example
 
 The next command will show you the containers hosted on Docker and there status.    

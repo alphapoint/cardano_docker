@@ -79,7 +79,7 @@ $  docker start cardano
 ````
 
 ### Comming soon :
-- Bind external volume to save database/blockchain
+- Bind external volume to save database/blockchain , issue : https://github.com/moby/moby/issues/24508
 - Write Dockerbuild for explorer 
 
 

@@ -30,6 +30,7 @@ Before running Docker container hosting Cardano node it's important to define a 
 You need to create a folder somewhere on your environment and give access right to 'root' user.
 ```sh
 $  sudo mkdir /data/cardano_docker_db
+$  sudo chmod 777  /data/cardano_docker_db
 ````
 
 To start docker container and run Cardano full node run the following command. Successful run should return you the id of the container.

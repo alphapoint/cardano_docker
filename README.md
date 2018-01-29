@@ -1,4 +1,4 @@
-# Cardano Node Docker 
+ # Cardano Node Docker 
 
 This repository contains docker files used to build docker image of the Cardano-sl node.
 - *cardano-sl-wallet* folder : contains docker file to build image of cardano-sl full node with wallet feature
@@ -64,6 +64,31 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 ````
 #### B. Explorer node
 
+Create folder to bind (to presist D) outsidbe container.
+```sh
+$  sudo mkdir /data/cardano_docker_explorer_db
+$  sudo chmod 777 /data/cardano_docker_explorer_db
+````
+
+To start docker container and run Cardano full node run the following command. Successful run should return you the id of the container.
+```sh
+$  docker run -d --name=cardano-explorer -v /data/cardano_docker_explorer_db:/home/cardano/cardano-sl/state-explorer-mainnet/:Z -p 127.0.0.1:8100:8100 d899e7637a94
+04ca92a3d8d2b7d181de181ed480c45034a12f45e4851522ac29d5a26ecf39a5
+````
+Command arguments :
+- *-d* : run container in background
+- *--name* : define the name of the Docker container
+- *-p* : port binding, bind the 8100 of the host to the port 8100 inside the container. Be careful that desired port are available on the host environment
+- *-v* : bind volume, this option allows to bind volume/folder from inside the container to a volume on the host enivornment. This way you can keep all data (blockchain db , wallet db) out of the container, you can delete and restart container without loosing your data.
+- *d899e7637a94* : docker image id in this example
+
+The next command will show you the containers hosted on Docker and there status.    
+
+```sh
+$  docker ps -a 
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                      NAMES
+04ca92a3d8d2        d899e7637a94        "/bin/sh -c ./connec…"   10 minutes ago      Up 10 minutes       127.0.0.1:8100->8100/tcp   cardano
+````
 
 
 ### Verify node is running 
@@ -78,10 +103,13 @@ For more information about Cardano wallet api : [Cardano Wallet API]
 
 #### B. Explorer node
 
-
-
-
-
+Cardano node running inside the container has the explorer feature available. You can connect node using explorer API on port 8100 (if you run container with this port binded). To check if the node is running properly you can run the following command :
+```sh
+$ curl -k http://localhost:8100/api/txs/las
+{"Right":[{"cteId":"b2772547040ac92515b3becbc5e3cf8df8866c26f56f8efd65c55f7724a5f797","cteTimeIssued":1507930691,"cteAmount":{"getCoin":"23749618279429"}},{"cteId":"f7dc6cd52df36fbb6b0049011b5367147485b31cb9ba586285fcb99327b3a0f6","cteTimeIssued":1507930571,"cteAmount":{"getCoin":"23750389693241"}},{"cteId":"80a7cb26946c989d4109dac602989ba4110b9b3d3113243b8b26d686706a7a...
+````
+The above command should return you the list of last transaction on the blockchain.
+For more information about Cardano wallet api : [Cardano Explorer API]
 
 ### Display container logs 
 ```sh
@@ -106,9 +134,6 @@ $  docker stop cardano
 $  docker start cardano 
 ````
 
-### Comming soon :
-- Bind external volume to save database/blockchain , issue : https://github.com/moby/moby/issues/24508
-- Write Dockerbuild for explorer 
 
 
 
@@ -116,4 +141,5 @@ $  docker start cardano
 
    [Install Docker]: <https://docs.docker.com/engine/installation/>
    [Cardano Wallet API]: <https://cardanodocs.com/technical/wallet/api/#>
+   [Cardano Explorer API]: <https://cardanodocs.com/technical/explorer/api/>
 

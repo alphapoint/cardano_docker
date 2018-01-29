@@ -15,7 +15,7 @@ The docker image used to host cardano node is Ubuntu 16.04.
 
 ```sh
 $ cd ./cardano-ls
-$ docker build -f DOCKERFILE
+$ docker build - <DOCKERFILE 
 ````
 After build is finished you can see the list of available images on your Docker local repository. In this example our build name (or image Id) is d899e7637a94. 
 ```sh

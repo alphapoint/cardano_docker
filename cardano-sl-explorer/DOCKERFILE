@@ -21,4 +21,4 @@ RUN . /home/cardano/.nix-profile/etc/profile.d/nix.sh &&\
 RUN . /home/cardano/.nix-profile/etc/profile.d/nix.sh &&\
     nix-build release.nix -A connect.mainnetExplorer -o connect-explorer-to-mainnet
 
-CMD ./connect-to-mainnet
+CMD ./connect-explorer-to-mainnet

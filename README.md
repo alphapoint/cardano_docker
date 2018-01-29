@@ -1,7 +1,8 @@
 # Cardano Node Docker 
 
 This repository contains docker files used to build docker image of the Cardano-sl node.
-- *cardano-sl* folder : contains docker file to build image of cardano-sl full node with wallet feature
+- *cardano-sl-wallet* folder : contains docker file to build image of cardano-sl full node with wallet feature
+- *cardano-sl-explorer* folder : contains docker file to build image of cardano-sl full node with explorer feature
 
 ### Requirements
 
@@ -13,10 +14,19 @@ This repository contains docker files used to build docker image of the Cardano-
 First you need to build docker image from a docker file, docker file contains all instructions to download projects sources, dependencies and then builds the project binaries. Build of docker image takes some time, be patient ...
 The docker image used to host cardano node is Ubuntu 16.04.
 
+For wallet :
 ```sh
-$ cd ./cardano-ls
-$ docker build -f DOCKERFILE
+$ cd ./cardano-ls-wallet
+$ docker build - < DOCKERFILE
 ````
+For explorer : 
+```sh
+$ cd ./cardano-ls-explorer
+$ docker build - < DOCKERFILE
+````
+
+
+
 After build is finished you can see the list of available images on your Docker local repository. In this example our build name (or image Id) is d899e7637a94. 
 ```sh
 $ docker images
@@ -26,6 +36,7 @@ ubuntu              16.04               2a4cca5ac898        8 days ago          
 ````
 
 ### How to run Docker Cardano node 
+#### A. Wallet node
 Before running Docker container hosting Cardano node it's important to define a volume on the host machine where to bind data : this means blockchain database and other data will be persisted on host environment and not inside the container itself. In case you need to stop/update or run again you container you won't loose you data.
 You need to create a folder somewhere on your environment and give access right to 'root' user.
 ```sh
@@ -51,15 +62,25 @@ $  docker ps -a
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                      NAMES
 04ca92a3d8d2        d899e7637a94        "/bin/sh -c ./connec…"   10 minutes ago      Up 10 minutes       127.0.0.1:8090->8090/tcp   cardano
 ````
-### Verify node is running 
+#### B. Explorer node
 
+
+
+### Verify node is running 
+#### A. Wallet node
 Cardano node running inside the container has the wallet feature available. You can connect node using wallet API on port 8090 (if you run container with this port binded). To check if the node is running properly you can run the following command :
 ```sh
 $  curl -k https://localhost:8090/api/settings/sync/progress
 {"Right":{"_spLocalCD":{"getChainDifficulty":{"getBlockCount":182509}},"_spNetworkCD":{"getChainDifficulty":{"getBlockCount":527963}},"_spPeers":0}}c
 ````
 This command should return the synchronizarion state of you node : total blockchain lenght and the blocks you already fetched.
-For more information about Cardano wallet api : [Cardano Waller API]
+For more information about Cardano wallet api : [Cardano Wallet API]
+
+#### B. Explorer node
+
+
+
+
 
 
 ### Display container logs 
@@ -94,5 +115,5 @@ $  docker start cardano
 **Emurgo Vietnam - 2018**
 
    [Install Docker]: <https://docs.docker.com/engine/installation/>
-   [Cardano Waller API]: <https://cardanodocs.com/technical/wallet/api/#>
+   [Cardano Wallet API]: <https://cardanodocs.com/technical/wallet/api/#>
 

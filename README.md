@@ -106,7 +106,7 @@ For more information about Cardano wallet api : [Cardano Wallet API]
 
 Cardano node running inside the container has the explorer feature available. You can connect node using explorer API on port 8100 (if you run container with this port binded). To check if the node is running properly you can run the following command :
 ```sh
-$ curl -k http://localhost:8100/api/txs/las
+$ curl -k http://localhost:8100/api/txs/last
 {"Right":[{"cteId":"b2772547040ac92515b3becbc5e3cf8df8866c26f56f8efd65c55f7724a5f797","cteTimeIssued":1507930691,"cteAmount":{"getCoin":"23749618279429"}},{"cteId":"f7dc6cd52df36fbb6b0049011b5367147485b31cb9ba586285fcb99327b3a0f6","cteTimeIssued":1507930571,"cteAmount":{"getCoin":"23750389693241"}},{"cteId":"80a7cb26946c989d4109dac602989ba4110b9b3d3113243b8b26d686706a7a...
 ````
 The above command should return you the list of last transaction on the blockchain.

@@ -14,15 +14,17 @@ This repository contains docker files used to build docker image of the Cardano-
 First you need to build docker image from a docker file, docker file contains all instructions to download projects sources, dependencies and then builds the project binaries. Build of docker image takes some time, be patient ...
 The docker image used to host cardano node is Ubuntu 16.04.
 
+Commands below have to executed in the same folder as the Dockerfile file.
+
 For wallet :
 ```sh
 $ cd ./cardano-ls-wallet
-$ docker build - < DOCKERFILE
+$ docker build .
 ````
 For explorer : 
 ```sh
 $ cd ./cardano-ls-explorer
-$ docker build - < DOCKERFILE
+$ docker build .
 ````
 
 

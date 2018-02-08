@@ -10,7 +10,7 @@ RUN apt-get update &&\
    echo binary-caches-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= >> /etc/nix/nix.conf &&\
    su - cardano -c 'git clone https://github.com/input-output-hk/cardano-sl.git /home/cardano/cardano-sl'
 
-COPY default.conf /etc/nginx/conf.d/
+ADD default.conf /etc/nginx/conf.d/
 
 USER cardano
 ENV USER cardano

@@ -22,8 +22,10 @@ ENV USER cardano
 RUN curl https://nixos.org/nix/install | sh
 
 WORKDIR /home/cardano/cardano-sl
-RUN git checkout develop
+RUN git checkout master &&\
+   git fetch origin &&\
+   git pull
 RUN . /home/cardano/.nix-profile/etc/profile.d/nix.sh &&\
-   nix-build -A connectScripts.mainnetWallet -o connect-to-mainnet  
+   nix-build -A connectScripts.mainnetWallet -o connect-to-mainnet
     
 CMD /home/cardano/cardano-sl/start-cardano-container.sh

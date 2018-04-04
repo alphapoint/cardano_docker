@@ -7,7 +7,7 @@ RUN apt-get update &&\
    chown cardano /nix &&\
    mkdir -p /etc/nix &&\
    echo binary-caches = https://cache.nixos.org https://hydra.iohk.io > /etc/nix/nix.conf &&\
-   echo binary-caches-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= >> /etc/nix/nix.conf &&\
+   echo binary-cache-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= >> /etc/nix/nix.conf &&\
    su - cardano -c 'git clone https://github.com/input-output-hk/cardano-sl.git /home/cardano/cardano-sl'
 
 ADD default.conf /etc/nginx/conf.d/
@@ -22,9 +22,7 @@ ENV USER cardano
 RUN curl https://nixos.org/nix/install | sh
 
 WORKDIR /home/cardano/cardano-sl
-RUN git checkout master &&\
-   git fetch origin &&\
-   git pull
+RUN git checkout tags/1.1.0 
 RUN . /home/cardano/.nix-profile/etc/profile.d/nix.sh &&\
    nix-build -A connectScripts.mainnetWallet -o connect-to-mainnet
     
